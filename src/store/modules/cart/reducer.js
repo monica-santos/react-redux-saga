@@ -2,7 +2,7 @@ import produce from 'immer'
 
 export default (state = [], action) => {
   switch (action.type) {
-    case '@cart/ADD':
+    case '@cart/ADD_SUCCESS':
       return produce(state, draft => {
         const product = draft.find(p => p.id === action.product.id)
         if (product) product.amount += 1
