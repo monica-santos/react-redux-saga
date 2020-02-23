@@ -1,160 +1,67 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { func, shape } from 'prop-types'
 import { MdAddShoppingCart } from 'react-icons/md'
 import { ProducList } from './styles'
+import api from '../../services/api'
+import { formatPrice } from '../../util/format'
+import * as CardActions from '../../store/modules/cart/actions'
 
-export default function Home() {
-  return (
-    <ProducList>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
+class Home extends Component {
+  static propTypes = {
+    addToCart: func.isRequired,
+    amount: shape({}).isRequired,
+  }
 
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
+  state = {
+    products: [],
+  }
 
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
+  async componentDidMount() {
+    const { data } = await api.get('/products')
+    const products = data.map(item => ({
+      ...item,
+      formattedPrice: formatPrice(item.price),
+    }))
+    this.setState({ products })
+  }
 
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
+  handleAddToCart = product => {
+    const { addToCart } = this.props
+    addToCart(product)
+  }
 
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
+  render() {
+    const { products } = this.state
+    const { amount } = this.props
+    return (
+      <ProducList>
+        {products.map(item => (
+          <li key={item.id}>
+            <img src={item.image} alt={item.title} />
 
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
-
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
-
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
-
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
-
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-vs-pace-masculino/06/COL-0552-006/COL-0552-006_zoom1.jpg?ims=544x"
-          alt="Tênis Adidas Vs Pace"
-        />
-
-        <strong>Tênis Adidas Vs Pace</strong>
-        <span>R$169,99</span>
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" />
-          </div>
-          <span>Adicionar ao carrinho</span>
-        </button>
-      </li>
-    </ProducList>
-  )
+            <strong>{item.title}</strong>
+            <span>{item.formattedPrice}</span>
+            <button type="button" onClick={() => this.handleAddToCart(item)}>
+              <div>
+                <MdAddShoppingCart size={16} color="#fff" />{' '}
+                {amount[item.id] || 0}
+              </div>
+              <span>Adicionar ao carrinho</span>
+            </button>
+          </li>
+        ))}
+      </ProducList>
+    )
+  }
 }
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, item) => {
+    amount[item.id] = item.amount
+    return amount
+  }, {}),
+})
+const mapDispatchToProps = dispatch => bindActionCreators(CardActions, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
