@@ -13,14 +13,14 @@ import * as CartActions from '../../store/modules/cart/actions'
 import { formatPrice } from '../../util/format'
 
 const Cart = props => {
-  const { cart, total, removeFromCart, updateAmount } = props
+  const { cart, total, removeFromCart, updateAmountRequest } = props
 
   const increment = product => {
-    updateAmount(product.id, product.amount + 1)
+    updateAmountRequest(product.id, product.amount + 1)
   }
 
   const decrement = product => {
-    updateAmount(product.id, product.amount - 1)
+    updateAmountRequest(product.id, product.amount - 1)
   }
   return (
     <Container>
@@ -83,7 +83,7 @@ Cart.propTypes = {
   cart: arrayOf(shape({})).isRequired,
   total: string.isRequired,
   removeFromCart: func.isRequired,
-  updateAmount: func.isRequired,
+  updateAmountRequest: func.isRequired,
 }
 
 const mapStateToProps = state => ({
